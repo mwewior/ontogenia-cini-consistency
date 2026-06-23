@@ -19,7 +19,7 @@
     dcat:landingPage   <https://w3id.org/bench4ke/dimension/SemanticSimilarity> ;
     dcterms:description """Semantic Similarity measures the degree to which generated competency questions convey the same meaning
 as gold-standard CQs, using neural language models to represent sentences as dense vectors in a shared
-embedding space. Metrics in this dimension are robust to lexical variation and paraphrasing.
+embedding space. Metrics in this dimension are robust to paraphrasing and lexical variation.
 
 Two complementary perspectives are captured: (1) mean pairwise similarity across all generated-gold
 combinations, providing a distributional view; (2) best-match aggregations, which compute precision-
@@ -39,19 +39,32 @@ and recall-oriented scores by finding the closest partner for each generated or 
     ftr:hasBenchmark   <https://w3id.org/bench4ke> ;
     ftr:supportedBy    <https://w3id.org/bench4ke> ;
     dpv:isApplicableFor <https://www.wikidata.org/wiki/Q184754> ;
-    dcterms:creator    <https://orcid.org/0000-0002-0266-3452> ;
+    dcterms:creator    <https://orcid.org/0000-0002-0266-3452>,
+                       <https://orcid.org/0009-0009-4332-1780> ;
     dcat:contactPoint  <https://orcid.org/0000-0002-0266-3452> ;
-    dcterms:publisher  <https://w3id.org/bench4ke/org/unibo> ;
+    dcterms:publisher  <https://ror.org/01111rn36>,
+                       <https://ror.org/05w9g2j85>,
+                       <https://stlab.istc.cnr.it/stlab/> ;
     dcterms:license    <http://creativecommons.org/licenses/by/4.0/> .
 
 <https://orcid.org/0000-0002-0266-3452> a vcard:Individual ;
     vcard:fn       "Anna Sofia Lippolis" ;
-    vcard:hasEmail <mailto:annasofia.lippolis2@unibo.it> ;
+    vcard:hasEmail <mailto:annasofia.lippolis2@unibo.it>,
+                   <mailto:annasofia.lippolis@istc.cnr.it> ;
     vcard:url      <https://orcid.org/0000-0002-0266-3452> .
 
-<https://w3id.org/bench4ke/org/unibo> a vcard:Organization, foaf:Organization ;
-    vcard:fn  "University of Bologna" ;
-    vcard:url <https://www.unibo.it/> .
+<https://orcid.org/0009-0009-4332-1780> a vcard:Individual ;
+    vcard:fn  "Minh Davide Ragagni" ;
+    vcard:url <https://orcid.org/0009-0009-4332-1780> .
+
+<https://ror.org/01111rn36> a foaf:Organization ;
+    foaf:name "University of Bologna" .
+
+<https://ror.org/05w9g2j85> a foaf:Organization ;
+    foaf:name "Institute of Cognitive Sciences and Technologies, CNR (ISTC-CNR)" .
+
+<https://stlab.istc.cnr.it/stlab/> a foaf:Organization ;
+    foaf:name "Semantic Technology Laboratory (STLab), ISTC-CNR" .
 
 <https://w3id.org/bench4ke> a ftr:Benchmark ;
     dcterms:title      "Bench4KE"@en ;

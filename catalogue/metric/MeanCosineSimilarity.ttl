@@ -13,7 +13,7 @@
 <https://w3id.org/bench4ke/metric/MeanCosineSimilarity> a dqv:Metric, ftr:Test ;
     dcterms:identifier "https://w3id.org/bench4ke/metric/MeanCosineSimilarity" ;
     dcterms:title      "Mean Cosine Similarity"@en ;
-    rdfs:label         "MeanCosineSimilarity: average pairwise cosine similarity across all generated–gold CQ pairs"^^xsd:string ;
+    rdfs:label         "MeanCosineSimilarity: average pairwise cosine similarity across all generated-gold CQ pairs"^^xsd:string ;
     dcat:version       "0.1.0"^^xsd:string ;
     ftr:status         "Active"@en ;
     dcat:landingPage   <https://w3id.org/bench4ke/metric/MeanCosineSimilarity> ;
@@ -24,11 +24,10 @@ Embeddings are produced by the all-MiniLM-L6-v2 model from the sentence-transfor
 maps CQ text to a 384-dimensional dense vector capturing sentence-level semantics.
 
 Formula (for sets G of generated CQs and M of gold CQs):
-  score = mean_{g ∈ G, m ∈ M} cos(embed(g), embed(m))
+  score = mean_{g in G, m in M} cos(embed(g), embed(m))
 
 Range: [0, 1]. Provides a global distributional view of alignment between the two CQ sets.
-Because it averages over all pairs — including non-best-matching ones — it is typically lower than
-best-match aggregations and reflects overall topical overlap rather than coverage."""@en ;
+Because it averages over all pairs, it reflects overall topical overlap rather than targeted coverage."""@en ;
     dcat:keyword       "Metric"@en,
     "Cosine Similarity"@en,
     "SBERT"@en,
@@ -40,19 +39,32 @@ best-match aggregations and reflects overall topical overlap rather than coverag
     ftr:hasBenchmark   <https://w3id.org/bench4ke> ;
     ftr:supportedBy    <https://w3id.org/bench4ke> ;
     dpv:isApplicableFor <https://www.wikidata.org/wiki/Q184754> ;
-    dcterms:creator    <https://orcid.org/0000-0002-0266-3452> ;
+    dcterms:creator    <https://orcid.org/0000-0002-0266-3452>,
+                       <https://orcid.org/0009-0009-4332-1780> ;
     dcat:contactPoint  <https://orcid.org/0000-0002-0266-3452> ;
-    dcterms:publisher  <https://w3id.org/bench4ke/org/unibo> ;
+    dcterms:publisher  <https://ror.org/01111rn36>,
+                       <https://ror.org/05w9g2j85>,
+                       <https://stlab.istc.cnr.it/stlab/> ;
     dcterms:license    <http://creativecommons.org/licenses/by/4.0/> .
 
 <https://orcid.org/0000-0002-0266-3452> a vcard:Individual ;
     vcard:fn       "Anna Sofia Lippolis" ;
-    vcard:hasEmail <mailto:annasofia.lippolis2@unibo.it> ;
+    vcard:hasEmail <mailto:annasofia.lippolis2@unibo.it>,
+                   <mailto:annasofia.lippolis@istc.cnr.it> ;
     vcard:url      <https://orcid.org/0000-0002-0266-3452> .
 
-<https://w3id.org/bench4ke/org/unibo> a vcard:Organization, foaf:Organization ;
-    vcard:fn  "University of Bologna" ;
-    vcard:url <https://www.unibo.it/> .
+<https://orcid.org/0009-0009-4332-1780> a vcard:Individual ;
+    vcard:fn  "Minh Davide Ragagni" ;
+    vcard:url <https://orcid.org/0009-0009-4332-1780> .
+
+<https://ror.org/01111rn36> a foaf:Organization ;
+    foaf:name "University of Bologna" .
+
+<https://ror.org/05w9g2j85> a foaf:Organization ;
+    foaf:name "Institute of Cognitive Sciences and Technologies, CNR (ISTC-CNR)" .
+
+<https://stlab.istc.cnr.it/stlab/> a foaf:Organization ;
+    foaf:name "Semantic Technology Laboratory (STLab), ISTC-CNR" .
 
 <https://w3id.org/bench4ke> a ftr:Benchmark ;
     dcterms:title      "Bench4KE"@en ;
