@@ -1,0 +1,62 @@
+@prefix dqv:     <http://www.w3.org/ns/dqv#> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix sio:     <http://semanticscience.org/resource/> .
+
+<https://w3id.org/bench4ke/metric/AugmentedHitRate> a dqv:Metric, ftr:Test ;
+    dcterms:identifier "https://w3id.org/bench4ke/metric/AugmentedHitRate" ;
+    dcterms:title      "Augmented Hit Rate"@en ;
+    rdfs:label         "AugmentedHitRate: hit rate augmented by LLM-assisted gap filling (Phase 2)"^^xsd:string ;
+    dcat:version       "0.1.0"^^xsd:string ;
+    ftr:status         "Active"@en ;
+    dcat:landingPage   <https://w3id.org/bench4ke/metric/AugmentedHitRate> ;
+    dcterms:description """Augmented Hit Rate extends Hit Rate (Phase 1) with a second phase in which an independent
+evaluator LLM generates candidate CQs targeting the benchmark items missed in Phase 1. These
+gap-filling CQs are validated by checking whether they match any benchmark CQ above threshold;
+valid gap CQs that recover missed benchmark items are counted towards coverage.
+
+Formula:
+  AugmentedHitRate = (covered_phase1 + recovered_phase2) / |M|
+
+where recovered_phase2 is the count of previously missed benchmark CQs now covered by valid
+evaluator-generated gap CQs.
+
+Range: [0, 1]. The evaluator LLM must differ from the tool's generation LLM to prevent circular
+evaluation. Augmented Hit Rate provides an upper-bound estimate of achievable coverage and
+identifies the semantic gap between tool output and benchmark."""@en ;
+    dcat:keyword       "Metric"@en,
+    "Hit Rate"@en,
+    "Coverage"@en,
+    "LLM Gap Filling"@en,
+    "Augmented"@en,
+    "Bench4KE"@en ;
+    dqv:inDimension    <https://w3id.org/bench4ke/dimension/Coverage> ;
+    dcterms:isPartOf   <https://w3id.org/bench4ke/task/CQGeneration> ;
+    ftr:hasBenchmark   <https://w3id.org/bench4ke> ;
+    ftr:supportedBy    <https://w3id.org/bench4ke> ;
+    dpv:isApplicableFor <https://www.wikidata.org/wiki/Q184754> ;
+    dcterms:creator    <https://orcid.org/0000-0002-0266-3452> ;
+    dcat:contactPoint  <https://orcid.org/0000-0002-0266-3452> ;
+    dcterms:publisher  <https://w3id.org/bench4ke/org/unibo> ;
+    dcterms:license    <http://creativecommons.org/licenses/by/4.0/> .
+
+<https://orcid.org/0000-0002-0266-3452> a vcard:Individual ;
+    vcard:fn       "Anna Sofia Lippolis" ;
+    vcard:hasEmail <mailto:annasofia.lippolis2@unibo.it> ;
+    vcard:url      <https://orcid.org/0000-0002-0266-3452> .
+
+<https://w3id.org/bench4ke/org/unibo> a vcard:Organization, foaf:Organization ;
+    vcard:fn  "University of Bologna" ;
+    vcard:url <https://www.unibo.it/> .
+
+<https://w3id.org/bench4ke> a ftr:Benchmark ;
+    dcterms:title      "Bench4KE"@en ;
+    dcterms:identifier "https://w3id.org/bench4ke" ;
+    dcat:landingPage   <https://github.com/fossr-project/ontogenia-cini> .

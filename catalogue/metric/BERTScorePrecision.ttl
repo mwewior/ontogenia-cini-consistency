@@ -1,0 +1,56 @@
+@prefix dqv:     <http://www.w3.org/ns/dqv#> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix sio:     <http://semanticscience.org/resource/> .
+
+<https://w3id.org/bench4ke/metric/BERTScorePrecision> a dqv:Metric, ftr:Test ;
+    dcterms:identifier "https://w3id.org/bench4ke/metric/BERTScorePrecision" ;
+    dcterms:title      "BERTScore Precision"@en ;
+    rdfs:label         "BERTScorePrecision: contextual token-level precision of generated CQs against gold standard"^^xsd:string ;
+    dcat:version       "0.1.0"^^xsd:string ;
+    ftr:status         "Active"@en ;
+    dcat:landingPage   <https://w3id.org/bench4ke/metric/BERTScorePrecision> ;
+    dcterms:description """BERTScore Precision measures the average contextual similarity of generated CQ tokens to their
+best-matching gold-standard CQ tokens. For each generated token, the maximum cosine similarity to
+any gold token (using microsoft/deberta-xlarge-mnli embeddings) is computed; the mean across all
+generated tokens gives the precision for that pair. Averaged over all generated×gold pairs.
+
+Range: [0, 1]. High BERTScore Precision indicates that generated CQ tokens are semantically
+grounded in the gold standard. It may be high even when recall is low (i.e., generated CQs are
+relevant but incomplete)."""@en ;
+    dcat:keyword       "Metric"@en,
+    "BERTScore"@en,
+    "Precision"@en,
+    "Contextual Embeddings"@en,
+    "Semantic Similarity"@en,
+    "Bench4KE"@en ;
+    dqv:inDimension    <https://w3id.org/bench4ke/dimension/SemanticSimilarity> ;
+    dcterms:isPartOf   <https://w3id.org/bench4ke/task/CQGeneration> ;
+    ftr:hasBenchmark   <https://w3id.org/bench4ke> ;
+    ftr:supportedBy    <https://w3id.org/bench4ke> ;
+    dpv:isApplicableFor <https://www.wikidata.org/wiki/Q184754> ;
+    dcterms:creator    <https://orcid.org/0000-0002-0266-3452> ;
+    dcat:contactPoint  <https://orcid.org/0000-0002-0266-3452> ;
+    dcterms:publisher  <https://w3id.org/bench4ke/org/unibo> ;
+    dcterms:license    <http://creativecommons.org/licenses/by/4.0/> .
+
+<https://orcid.org/0000-0002-0266-3452> a vcard:Individual ;
+    vcard:fn       "Anna Sofia Lippolis" ;
+    vcard:hasEmail <mailto:annasofia.lippolis2@unibo.it> ;
+    vcard:url      <https://orcid.org/0000-0002-0266-3452> .
+
+<https://w3id.org/bench4ke/org/unibo> a vcard:Organization, foaf:Organization ;
+    vcard:fn  "University of Bologna" ;
+    vcard:url <https://www.unibo.it/> .
+
+<https://w3id.org/bench4ke> a ftr:Benchmark ;
+    dcterms:title      "Bench4KE"@en ;
+    dcterms:identifier "https://w3id.org/bench4ke" ;
+    dcat:landingPage   <https://github.com/fossr-project/ontogenia-cini> .

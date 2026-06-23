@@ -1,0 +1,60 @@
+@prefix dqv:     <http://www.w3.org/ns/dqv#> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix sio:     <http://semanticscience.org/resource/> .
+
+<https://w3id.org/bench4ke/metric/PrecisionAtThreshold> a dqv:Metric, ftr:Test ;
+    dcterms:identifier "https://w3id.org/bench4ke/metric/PrecisionAtThreshold" ;
+    dcterms:title      "Precision at Threshold"@en ;
+    rdfs:label         "PrecisionAtThreshold: fraction of generated CQs matched to at least one gold CQ above threshold"^^xsd:string ;
+    dcat:version       "0.1.0"^^xsd:string ;
+    ftr:status         "Active"@en ;
+    dcat:landingPage   <https://w3id.org/bench4ke/metric/PrecisionAtThreshold> ;
+    dcterms:description """Precision at Threshold measures the fraction of generated CQs whose best cosine similarity to any
+gold-standard CQ meets or exceeds the threshold (default 0.6), using SBERT sentence embeddings.
+
+Formula:
+  P@τ = |{g ∈ G : max_{m ∈ M} cos(embed(g), embed(m)) ≥ τ}| / |G|
+
+where G is the set of generated CQs, M is the set of gold-standard CQs, and τ = 0.6.
+
+Range: [0, 1]. Precision at Threshold is the discrete counterpart of MeanBestMatchCosine:
+while MeanBestMatchCosine reports the average similarity of best matches, P@τ counts how many
+generated CQs clear the relevance bar. A high score indicates that most generated CQs are
+semantically grounded in the gold standard."""@en ;
+    dcat:keyword       "Metric"@en,
+    "Precision"@en,
+    "Threshold"@en,
+    "Coverage"@en,
+    "Bench4KE"@en ;
+    dqv:inDimension    <https://w3id.org/bench4ke/dimension/Coverage> ;
+    dcterms:isPartOf   <https://w3id.org/bench4ke/task/CQGeneration> ;
+    rdfs:seeAlso    <https://w3id.org/cq4oe/metric/Precision> ;
+    ftr:hasBenchmark   <https://w3id.org/bench4ke> ;
+    ftr:supportedBy    <https://w3id.org/bench4ke> ;
+    dpv:isApplicableFor <https://www.wikidata.org/wiki/Q184754> ;
+    dcterms:creator    <https://orcid.org/0000-0002-0266-3452> ;
+    dcat:contactPoint  <https://orcid.org/0000-0002-0266-3452> ;
+    dcterms:publisher  <https://w3id.org/bench4ke/org/unibo> ;
+    dcterms:license    <http://creativecommons.org/licenses/by/4.0/> .
+
+<https://orcid.org/0000-0002-0266-3452> a vcard:Individual ;
+    vcard:fn       "Anna Sofia Lippolis" ;
+    vcard:hasEmail <mailto:annasofia.lippolis2@unibo.it> ;
+    vcard:url      <https://orcid.org/0000-0002-0266-3452> .
+
+<https://w3id.org/bench4ke/org/unibo> a vcard:Organization, foaf:Organization ;
+    vcard:fn  "University of Bologna" ;
+    vcard:url <https://www.unibo.it/> .
+
+<https://w3id.org/bench4ke> a ftr:Benchmark ;
+    dcterms:title      "Bench4KE"@en ;
+    dcterms:identifier "https://w3id.org/bench4ke" ;
+    dcat:landingPage   <https://github.com/fossr-project/ontogenia-cini> .

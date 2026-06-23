@@ -1,0 +1,57 @@
+@prefix dqv:     <http://www.w3.org/ns/dqv#> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix sio:     <http://semanticscience.org/resource/> .
+
+<https://w3id.org/bench4ke/dimension/LLMEvaluation> a dqv:Dimension ;
+    dcterms:identifier "https://w3id.org/bench4ke/dimension/LLMEvaluation" ;
+    dcterms:title      "LLM Evaluation"@en ;
+    rdfs:label         "LLMEvaluation: intrinsic quality assessment of generated CQs by an LLM judge"^^xsd:string ;
+    dcat:version       "0.1.0"^^xsd:string ;
+    ftr:status         "Active"@en ;
+    dcat:landingPage   <https://w3id.org/bench4ke/dimension/LLMEvaluation> ;
+    dcterms:description """LLM Evaluation assesses the intrinsic quality of generated competency questions using a large language
+model as an automated judge. Unlike reference-based metrics, LLM-as-judge scoring does not require a
+gold standard: each generated CQ is scored independently on three quality dimensions — relevance,
+clarity, and depth — on a 1–5 Likert scale.
+
+The evaluator LLM must be different from the tool's generation LLM to avoid self-evaluation bias.
+Scores provide a complementary signal to similarity-based metrics, capturing qualities such as
+linguistic well-formedness and domain specificity that surface- and embedding-based metrics may miss."""@en ;
+    dcat:keyword       "LLMEvaluation"@en,
+    "LLM-as-Judge"@en,
+    "Intrinsic Evaluation"@en,
+    "Bench4KE"@en ;
+    dqv:hasQualityMetric
+        <https://w3id.org/bench4ke/metric/LLMJudgeRelevance>,
+        <https://w3id.org/bench4ke/metric/LLMJudgeClarity>,
+        <https://w3id.org/bench4ke/metric/LLMJudgeDepth> ;
+    dcterms:isPartOf   <https://w3id.org/bench4ke/task/CQGeneration> ;
+    ftr:hasBenchmark   <https://w3id.org/bench4ke> ;
+    ftr:supportedBy    <https://w3id.org/bench4ke> ;
+    dpv:isApplicableFor <https://www.wikidata.org/wiki/Q184754> ;
+    dcterms:creator    <https://orcid.org/0000-0002-0266-3452> ;
+    dcat:contactPoint  <https://orcid.org/0000-0002-0266-3452> ;
+    dcterms:publisher  <https://w3id.org/bench4ke/org/unibo> ;
+    dcterms:license    <http://creativecommons.org/licenses/by/4.0/> .
+
+<https://orcid.org/0000-0002-0266-3452> a vcard:Individual ;
+    vcard:fn       "Anna Sofia Lippolis" ;
+    vcard:hasEmail <mailto:annasofia.lippolis2@unibo.it> ;
+    vcard:url      <https://orcid.org/0000-0002-0266-3452> .
+
+<https://w3id.org/bench4ke/org/unibo> a vcard:Organization, foaf:Organization ;
+    vcard:fn  "University of Bologna" ;
+    vcard:url <https://www.unibo.it/> .
+
+<https://w3id.org/bench4ke> a ftr:Benchmark ;
+    dcterms:title      "Bench4KE"@en ;
+    dcterms:identifier "https://w3id.org/bench4ke" ;
+    dcat:landingPage   <https://github.com/fossr-project/ontogenia-cini> .

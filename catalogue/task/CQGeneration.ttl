@@ -1,0 +1,75 @@
+@prefix dqv:     <http://www.w3.org/ns/dqv#> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix sio:     <http://semanticscience.org/resource/> .
+
+<https://w3id.org/bench4ke/task/CQGeneration> a prov:Activity, ftr:Benchmark ;
+    dcterms:identifier "https://w3id.org/bench4ke/task/CQGeneration" ;
+    dcterms:title      "Competency Question Generation"@en ;
+    rdfs:label         "CQGeneration: automated generation of competency questions for ontology engineering"^^xsd:string ;
+    dcat:version       "0.1.0"^^xsd:string ;
+    ftr:status         "Active"@en ;
+    dcat:landingPage   <https://w3id.org/bench4ke/task/CQGeneration> ;
+    dcterms:description """Competency Question (CQ) Generation is the task of automatically producing natural-language questions
+that an ontology must be able to answer, given some form of domain specification (user stories, ontology axioms,
+textual descriptions, or existing ontologies). CQs serve as requirements and validation criteria throughout the
+ontology engineering lifecycle.
+
+Bench4KE evaluates CQ generation tools by comparing their output against a curated gold-standard dataset of
+843 CQs drawn from real-world ontology projects (HACID, WHOW, Polifonia, ArCo). Evaluation is performed
+along four dimensions: Lexical Similarity, Semantic Similarity, Coverage, and LLM Evaluation."""@en ;
+    dcat:keyword
+        "Task"@en,
+        "CQ Generation"@en,
+        "Competency Questions"@en,
+        "Ontology Engineering"@en,
+        "Bench4KE"@en ;
+    dcterms:hasPart
+        <https://w3id.org/bench4ke/dimension/LexicalSimilarity>,
+        <https://w3id.org/bench4ke/dimension/SemanticSimilarity>,
+        <https://w3id.org/bench4ke/dimension/Coverage>,
+        <https://w3id.org/bench4ke/dimension/LLMEvaluation> ;
+    dqv:hasQualityMetric
+        <https://w3id.org/bench4ke/metric/JaccardSimilarity>,
+        <https://w3id.org/bench4ke/metric/BLEU>,
+        <https://w3id.org/bench4ke/metric/ROUGELF1>,
+        <https://w3id.org/bench4ke/metric/MeanCosineSimilarity>,
+        <https://w3id.org/bench4ke/metric/MeanBestMatchCosine>,
+        <https://w3id.org/bench4ke/metric/MeanGoldBestMatchCosine>,
+        <https://w3id.org/bench4ke/metric/BERTScoreF1>,
+        <https://w3id.org/bench4ke/metric/BERTScorePrecision>,
+        <https://w3id.org/bench4ke/metric/BERTScoreRecall>,
+        <https://w3id.org/bench4ke/metric/HitRate>,
+        <https://w3id.org/bench4ke/metric/AugmentedHitRate>,
+        <https://w3id.org/bench4ke/metric/PrecisionAtThreshold>,
+        <https://w3id.org/bench4ke/metric/LLMJudgeRelevance>,
+        <https://w3id.org/bench4ke/metric/LLMJudgeClarity>,
+        <https://w3id.org/bench4ke/metric/LLMJudgeDepth> ;
+    ftr:hasBenchmark   <https://w3id.org/bench4ke> ;
+    ftr:supportedBy    <https://w3id.org/bench4ke> ;
+    dpv:isApplicableFor <https://www.wikidata.org/wiki/Q184754> ;
+    dcterms:creator    <https://orcid.org/0000-0002-0266-3452> ;
+    dcat:contactPoint  <https://orcid.org/0000-0002-0266-3452> ;
+    dcterms:publisher  <https://w3id.org/bench4ke/org/unibo> ;
+    dcterms:license    <http://creativecommons.org/licenses/by/4.0/> .
+
+<https://orcid.org/0000-0002-0266-3452> a vcard:Individual ;
+    vcard:fn       "Anna Sofia Lippolis" ;
+    vcard:hasEmail <mailto:annasofia.lippolis2@unibo.it> ;
+    vcard:url      <https://orcid.org/0000-0002-0266-3452> .
+
+<https://w3id.org/bench4ke/org/unibo> a vcard:Organization, foaf:Organization ;
+    vcard:fn  "University of Bologna" ;
+    vcard:url <https://www.unibo.it/> .
+
+<https://w3id.org/bench4ke> a ftr:Benchmark ;
+    dcterms:title      "Bench4KE"@en ;
+    dcterms:identifier "https://w3id.org/bench4ke" ;
+    dcat:landingPage   <https://github.com/fossr-project/ontogenia-cini> .
