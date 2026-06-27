@@ -1,0 +1,71 @@
+@prefix dqv:     <http://www.w3.org/ns/dqv#> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix sio:     <http://semanticscience.org/resource/> .
+
+<https://w3id.org/bench4ke/metric/BERTScoreF1> a dqv:Metric, ftr:Test ;
+    dcterms:identifier "https://w3id.org/bench4ke/metric/BERTScoreF1" ;
+    dcterms:title      "BERTScore F1"@en ;
+    rdfs:label         "BERTScoreF1: contextual token-level F1 between generated and gold-standard CQs"^^xsd:string ;
+    dcat:version       "0.1.0"^^xsd:string ;
+    ftr:status         "Active"@en ;
+    dcat:landingPage   <https://w3id.org/bench4ke/metric/BERTScoreF1> ;
+    dcterms:description """BERTScore F1 measures the semantic similarity between a generated CQ and a gold-standard CQ by
+aligning their contextual token embeddings and computing a token-level F1 score. Token embeddings
+are produced by microsoft/deberta-xlarge-mnli.
+
+For each generated token, its best-matching gold token cosine similarity is taken (precision);
+for each gold token, its best-matching generated token cosine similarity is taken (recall).
+BERTScore-F1 is the harmonic mean of these two values, averaged over all generated×gold pairs.
+
+Range: [0, 1]. BERTScore is more robust to paraphrasing than lexical metrics because it operates
+on contextual embeddings. The F1 variant balances precision and recall at the token level."""@en ;
+    dcat:keyword       "Metric"@en,
+    "BERTScore"@en,
+    "F1"@en,
+    "Contextual Embeddings"@en,
+    "Semantic Similarity"@en,
+    "Bench4KE"@en ;
+    dqv:inDimension    <https://w3id.org/bench4ke/dimension/SemanticSimilarity> ;
+    dcterms:isPartOf   <https://w3id.org/bench4ke/task/CQGeneration> ;
+    ftr:hasBenchmark   <https://w3id.org/bench4ke> ;
+    ftr:supportedBy    <https://w3id.org/bench4ke> ;
+    dpv:isApplicableFor <https://www.wikidata.org/wiki/Q184754> ;
+    dcterms:creator    <https://orcid.org/0000-0002-0266-3452>,
+                       <https://orcid.org/0009-0009-4332-1780> ;
+    dcat:contactPoint  <https://orcid.org/0000-0002-0266-3452> ;
+    dcterms:publisher  <https://ror.org/01111rn36>,
+                       <https://ror.org/05w9g2j85>,
+                       <https://stlab.istc.cnr.it/stlab/> ;
+    dcterms:license    <http://creativecommons.org/licenses/by/4.0/> .
+
+<https://orcid.org/0000-0002-0266-3452> a vcard:Individual ;
+    vcard:fn       "Anna Sofia Lippolis" ;
+    vcard:hasEmail <mailto:annasofia.lippolis2@unibo.it>,
+                   <mailto:annasofia.lippolis@istc.cnr.it> ;
+    vcard:url      <https://orcid.org/0000-0002-0266-3452> .
+
+<https://orcid.org/0009-0009-4332-1780> a vcard:Individual ;
+    vcard:fn  "Minh Davide Ragagni" ;
+    vcard:url <https://orcid.org/0009-0009-4332-1780> .
+
+<https://ror.org/01111rn36> a foaf:Organization ;
+    foaf:name "University of Bologna" .
+
+<https://ror.org/05w9g2j85> a foaf:Organization ;
+    foaf:name "Institute of Cognitive Sciences and Technologies, CNR (ISTC-CNR)" .
+
+<https://stlab.istc.cnr.it/stlab/> a foaf:Organization ;
+    foaf:name "Semantic Technology Laboratory (STLab), ISTC-CNR" .
+
+<https://w3id.org/bench4ke> a ftr:Benchmark ;
+    dcterms:title      "Bench4KE"@en ;
+    dcterms:identifier "https://w3id.org/bench4ke" ;
+    dcat:landingPage   <https://github.com/fossr-project/ontogenia-cini> .
