@@ -1,10 +1,9 @@
-"""Shared single-run validation pipeline.
-
+"""
 Relocated from `app/routers/cq_validation.py` so both the `/validate/` router
-and the `ConsistencyEvaluator` import the same logic (no service -> router
-layering inversion). Behavior is unchanged for existing callers; an optional
-`provider` argument is threaded to the validation/judge LLMs so the consistency
-feature can route them through any provider (in our case OpenRouter).
+and the `ConsistencyEvaluator` import the same logic. Behavior is unchanged 
+for existing callers; an optional `provider` argument is threaded to the 
+validation/judge LLMs so the consistency feature can route them through any provider 
+e.g., OpenRouter.
 """
 
 
@@ -52,16 +51,15 @@ def _write_results_csv(results: list, path: str) -> None:
         writer.writerows(results)
 
 
-# Column names recognised across the CQ pipeline (single source of truth).
+# Column names recognised across the CQ pipeline.
 _CQ_COLUMN_ALIASES = ("gold standard", "generated", "competency question")
 
 
 def normalize_cq_columns(df: pd.DataFrame):
-    """Lowercase the recognised CQ columns (in place) and return (df, gold_col).
+    """Lowercase the recognised CQ columns and return (df, gold_col).
 
-    ``gold_col`` is ``"gold standard"`` / ``"competency question"`` / ``None`` if
-    neither is present. Shared by the ``/validate/`` router and the
-    ``ConsistencyEvaluator`` so the accepted column names live in one place.
+    ``gold_col`` is ``"gold standard"`` / ``"competency question"`` / ``None``, if
+    neither is present.
     """
     df.columns = [
         c.strip().lower() if c.strip().lower() in _CQ_COLUMN_ALIASES else c

@@ -1,15 +1,8 @@
 """
-ConsistencyEvaluator - repeats the generation→validation cycle n times.
+ConsistencyEvaluator - repeats the generation -> validation cycle ``n`` times.
 
-Generation-agnostic: every run regenerates via ``call_external_cq_generation_service``
-(the same seam ``cq_validation.py`` uses), then scores through the shared ``run_validation_pipeline``.
-Pure Python - no FastAPI/HTTP/async here; the router supplies an optional ``progress_callback``.
-
-Supports multithreading with priority stages:
-    1. Parallel CQs Generation Phase for every test
-    2. Validation Phase
-    3. Statistics & Evaluation Phase
-    4. Saving to file
+Generation-agnostic: every run regenerates via ``call_external_cq_generation_service``, 
+then validates and scores through the shared ``run_validation_pipeline``.
 """
 
 
@@ -32,7 +25,7 @@ from app.models import ConsistencyConfig
 
 logger = logging.getLogger(__name__)
 
-# Per-row numeric metrics emitted by CQValidator.validate() that we average per run.
+# Per-row numeric metrics emitted by CQValidator.validate() that get averaged per run.
 _NUMERIC_OVERALL_KEYS = [
     "Average Cosine Similarity", "Max Cosine Similarity",
     "Average Jaccard Similarity",
@@ -63,7 +56,6 @@ class ConsistencyEvaluator:
             except Exception as e:
                 logger.warning("progress_callback raised: %s", e)
 
-    # --------------------- dataset ---------------------
     def _load_dataset(self) -> Tuple[pd.DataFrame, str]:
         """Load the dataset from `cfg.standard_path` or `DEFAULT_DATASET`"""
         cfg = self.config
@@ -86,9 +78,8 @@ class ConsistencyEvaluator:
             raise ValueError("Dataset is empty after filtering.")
         return df, gold_col
 
-    # --------------------- modular core execution ---------------------
     def _generate_cqs(self, df: pd.DataFrame, gen_model: Optional[str]) -> pd.DataFrame:
-        """Only CQs generation (external tool / API)"""
+        """Run CQ generation via external tool / API call."""
         cfg = self.config
         df_run = df.copy()
         return call_external_cq_generation_service(
@@ -99,7 +90,7 @@ class ConsistencyEvaluator:
         )
 
     def _validate_cqs(self, df_run: pd.DataFrame, gold_col: str) -> dict:
-        """Only Validation (local)"""
+        """Run validation locally."""
         cfg = self.config
         result = run_validation_pipeline(
             df=df_run,
@@ -133,9 +124,8 @@ class ConsistencyEvaluator:
                 metrics[key] = float(hit_rate[key])
         return metrics
 
-    # --------------------- parallel wrappers ---------------------
     def _thread_generate_wrapper(self, task: dict, df: pd.DataFrame, total_tasks: int) -> None:
-        """Multithread wrapper for generation phase"""
+        """Multithread wrapper for generation phase."""
         with self._lock:
             self._active_workers += 1
             current_active = self._active_workers
@@ -224,18 +214,17 @@ class ConsistencyEvaluator:
             "total_tasks": total_tasks
         })
 
-    # --------------------- stats and reporting ---------------------
     @staticmethod
     def _safe(model: str) -> str:
         return str(model).replace("/", "_")
 
     def _stats(self, runs: List[dict],
                recomputed_scores: Optional[Dict[str, float]] = None) -> Dict[str, dict]:
+        """Compute dispersion statistics for the generated results."""
         return reporter.compute_stats(
             runs, self.config.original_scores, self.config.pass_threshold,
             recomputed_scores=recomputed_scores)
 
-    # --------------------- evaluation (post-generation) ---------------------
     def _calculate_model_stats(
             self,
             runs: List[dict],
@@ -258,8 +247,8 @@ class ConsistencyEvaluator:
             "summary": reporter.generate_qualitative_summary(stats, test_name),
         }
 
-    # --------------------- orchestration --------------------- 
     def run_all(self) -> dict:
+        """Main orchestration method for evaluation run."""
         cfg = self.config
         df, gold_col = self._load_dataset()
         result: Dict[str, object] = {

@@ -1,4 +1,4 @@
-"""Statistics, qualitative labels, and base64 plots for the ConsistencyEvaluator.
+"""Statistics, qualitative labels, and base64 plots for the ``ConsistencyEvaluator``.
 
 Pure functions over the per-run metric dicts produced by
 ``ConsistencyEvaluator._extract_overall_metrics``. Plots reuse the base64-PNG
@@ -12,12 +12,12 @@ import statistics
 from typing import Dict, List, Optional
 
 import matplotlib
-matplotlib.use("Agg")           # headless backend - no display needed
-import matplotlib.pyplot as plt # noqa: E402
-import seaborn as sns           # noqa: E402
+matplotlib.use("Agg")           # headless backend
+import matplotlib.pyplot as plt 
+import seaborn as sns           
 
 
-# CV thresholds for the qualitative stability label.
+# CV thresholds for qualitative stability labels.
 _STABLE_MAX = 0.05
 _MINOR_MAX = 0.15
 
@@ -44,15 +44,13 @@ def compute_stats(
     pass_threshold: float = -0.05,
     recomputed_scores: Optional[Dict[str, float]] = None,
 ) -> Dict[str, dict]:
-    """For each metric present (and numeric) in every run, compute dispersion stats.
+    """For each metric present in every run, compute dispersion stats.
 
-    If a metric has a reference score ``r_Orig`` - the published value from
-    ``original_scores`` (CoLLM original-study value) or, when absent, the
-    recomputed value from ``recomputed_scores`` (the original model's
-    repeatability mean) - also attach the **Performance Drift**
-    ``pd = (mean - r_Orig) / r_Orig``, a per-metric ``passed`` flag
-    (``pd >= pass_threshold``), and ``r_orig_source`` (``"published"`` or
-    ``"recomputed"``). Published scores take precedence per metric.
+    If a metric has a reference score in ``r_Orig`` - the published value from
+    ``original_scores`` or, when absent, the recomputed value from ``recomputed_scores`` 
+    which is the original model's repeatability mean. It also computes the **Performance Drift**
+    ``pd = (mean - r_Orig) / r_Orig``, a per-metric ``passed`` flag i.e., ``pd >= pass_threshold``, 
+    and ``r_orig_source`` (``"published"`` or ``"recomputed"``). Published scores take precedence per metric.
     """
     if not runs:
         return {}
@@ -64,7 +62,7 @@ def compute_stats(
             continue  # metric missing/non-numeric in some run - skip
         vals = [float(v) for v in vals]
         mean = sum(vals) / len(vals)
-        # Population std (1/n), matching the CoLLM paper's σ = sqrt((1/n)·Σ(r_i − μ)²).
+        # Compute std
         std = statistics.pstdev(vals) if len(vals) > 1 else 0.0
         cv = (std / mean) if mean != 0 else None
         drift = [v - vals[0] for v in vals]
@@ -76,7 +74,8 @@ def compute_stats(
             "drift": drift,
             "label": _label(std, cv),
         }
-        # Published r_Orig takes precedence per metric; otherwise fall back to the recomputed (original-model repeatability) baseline.
+        # Published r_Orig takes precedence per metric.
+        # Otherwise fall back to the recomputed baseline.
         published = (original_scores or {}).get(key)
         if _is_number(published) and published != 0:
             orig, source = float(published), "published"
@@ -87,7 +86,7 @@ def compute_stats(
         if orig is not None:
             pd = (mean - orig) / orig
             entry["r_orig"] = orig
-            entry["pd"] = pd    # Performance Drift (fraction)
+            entry["pd"] = pd    # Performance Drift
             entry["passed"] = pd >= pass_threshold
             entry["r_orig_source"] = source
         stats[key] = entry

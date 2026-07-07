@@ -1,18 +1,13 @@
-"""Config resolution for the ConsistencyEvaluator.
+"""Configuration resolution for the ConsistencyEvaluator.
 
-Two layers, both Hydra-like:
-
-1. **Baseline config file** (the reproducible, version-controlled setup) — a
+1. **Baseline config file** for reproducible, version-controlled setup — a
    YAML/JSON file with the nested ``generation`` / ``evaluation`` / ``dataset`` /
-   ``tests`` shape (see ``conf/consistency.yaml``). Deep-merged onto
-   ``DEFAULT_BASE`` so partial files still work.
-2. **Single-parameter overrides** — Hydra-style dotted ``key.path=value`` tokens
+   ``tests`` shape (see ``conf/consistency.yaml``).
+2. **Single-parameter overrides** — Dotted ``key.path=value`` tokens
    (e.g. ``evaluation.n_runs=3``,
    ``tests.repeatability.models=[openrouter/openai/gpt-4o]``) layered on top.
 
 ``resolve_config(file_dict, overrides)`` returns a validated ``ConsistencyConfig``.
-YAML support is optional (only used when a ``.yaml``/``.yml`` file is supplied);
-everything else is stdlib.
 """
 from __future__ import annotations
 
@@ -45,7 +40,7 @@ DEFAULT_BASE: Dict[str, Any] = {
         "max_validation_workers": 1,
         "original_scores": None,    # {metric_name: r_Orig} for Performance Drift / pass-fail
         "pass_threshold": -0.05,    # pass if PD >= this
-        "recompute_baseline": True, # fill missing r_Orig from the original model's repeatability mean
+        "recompute_baseline": True, # fill missing baseline/r_Orig from the original model's repeatability mean
     },
     "dataset": {
         "gold_standard_path": None,
@@ -61,12 +56,12 @@ DEFAULT_BASE: Dict[str, Any] = {
 
 
 def _coerce(value: str) -> Any:
-    """Coerce a raw override string to a Python scalar/list.
+    """
+    Auxiliary method to coerce a raw override string to a Python scalar/list.
 
     Handles null/none, true/false, ints, floats, ``[a, b, c]`` lists (quoted or
     bare items), and otherwise returns the raw string. Only *flat* lists are
-    supported — nested brackets (``[[a],[b]]``) are not, which is sufficient for
-    the documented ``key.path=value`` overrides (use a config file for nesting).
+    supported — nested brackets (``[[a],[b]]``) are not.
     """
     v = value.strip()
     low = v.lower()
@@ -113,7 +108,7 @@ def _set_dotted(target: Dict[str, Any], dotted_key: str, value: Any) -> None:
 
 
 def apply_overrides(base: Dict[str, Any], overrides: List[str]) -> Dict[str, Any]:
-    """Merge Hydra-style ``key.path=value`` overrides onto a deep copy of ``base``."""
+    """Merge Hydra-style dotted ``key.path=value`` overrides onto a deep copy of ``base``."""
     result = copy.deepcopy(base)
     for ov in overrides:
         if "=" not in ov:
@@ -164,7 +159,7 @@ def build_config(
 
 
 def _deep_merge(base: Dict[str, Any], override: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-    """Recursively merge ``override`` onto a deep copy of ``base`` (override wins)."""
+    """Recursively merge ``override`` onto a deep copy of ``base``. The override takes precedence."""
     out = copy.deepcopy(base)
     for k, v in (override or {}).items():
         if isinstance(v, dict) and isinstance(out.get(k), dict):

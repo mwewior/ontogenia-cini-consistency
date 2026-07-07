@@ -7,11 +7,10 @@ import sys
 import time
 from datetime import datetime
 
-# Make the project's `app` package importable regardless of cwd.
 _HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, _HERE)
 
-from app.services.consistency_config import load_config_file, resolve_config  # noqa: E402
+from app.services.consistency_config import load_config_file, resolve_config
 
 _DEFAULT_CONFIG = os.path.join(_HERE, "conf", "consistency.yaml")
 

@@ -1,6 +1,6 @@
 """Consistency-evaluation router.
 
-Invocation mirrors the `/validate/` service's philosophy - a multipart POST with
+Invocation mirrors the `/validate/` service with multipart POST with
 form parameters (and an optional uploaded file), not a JSON body:
 
     curl -X POST http://127.0.0.1:8000/consistency/ \
@@ -12,12 +12,10 @@ form parameters (and an optional uploaded file), not a JSON body:
     curl http://127.0.0.1:8000/consistency/<job_id>     # poll status/result
 
 The uploaded `config_file` is the reproducible **baseline**; repeated `override`
-form fields tweak single parameters (Hydra-style `key.path=value`). Either may be
-omitted - with no file the built-in defaults are used.
+form fields tweak single parameters via `key.path=value`. If no configuration
+file is provided the built-in defaults are used.
 
-Transport for the long, CPU-bound job: FastAPI BackgroundTasks + an in-process
-job store (no SSE, no asyncio.Queue → no thread-safety hazard). Progress is
-coarse (test/run/phase), written to a plain dict the GET endpoint reads.
+Progress on jobs can be requested via the GET endpoint.
 """
 
 import logging
@@ -43,7 +41,7 @@ _MAX_JOBS = 100
 
 
 def _consistency_task(job_id: str, config: ConsistencyConfig) -> None:
-    """Runs in Starlette's threadpool (sync function). Mutates the job dict in place."""
+    """Runs in threadpool. Mutates the job dict in place."""
     def progress(event: dict) -> None:
         if job_id in _jobs:
             _jobs[job_id]["progress"] = event
@@ -64,7 +62,7 @@ def _consistency_task(job_id: str, config: ConsistencyConfig) -> None:
 @router.post("/")
 async def run_consistency(
     background_tasks: BackgroundTasks,
-    config_file: UploadFile = File(None),       # baseline config (YAML/JSON); optional
+    config_file: UploadFile = File(None),       # optional baseline config (YAML/JSON)
     override: Optional[List[str]] = Form(None), # repeated key.path=value single-param overrides
 ):
     """Submit a consistency-evaluation job built from an optional baseline config
