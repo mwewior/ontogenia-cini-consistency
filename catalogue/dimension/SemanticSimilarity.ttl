@@ -1,0 +1,72 @@
+@prefix dqv:     <http://www.w3.org/ns/dqv#> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix sio:     <http://semanticscience.org/resource/> .
+
+<https://w3id.org/bench4ke/dimension/SemanticSimilarity> a dqv:Dimension ;
+    dcterms:identifier "https://w3id.org/bench4ke/dimension/SemanticSimilarity" ;
+    dcterms:title      "Semantic Similarity"@en ;
+    rdfs:label         "SemanticSimilarity: embedding-based alignment between generated and gold-standard CQs"^^xsd:string ;
+    dcat:version       "0.1.0"^^xsd:string ;
+    ftr:status         "Active"@en ;
+    dcat:landingPage   <https://w3id.org/bench4ke/dimension/SemanticSimilarity> ;
+    dcterms:description """Semantic Similarity measures the degree to which generated competency questions convey the same meaning
+as gold-standard CQs, using neural language models to represent sentences as dense vectors in a shared
+embedding space. Metrics in this dimension are robust to paraphrasing and lexical variation.
+
+Two complementary perspectives are captured: (1) mean pairwise similarity across all generated-gold
+combinations, providing a distributional view; (2) best-match aggregations, which compute precision-
+and recall-oriented scores by finding the closest partner for each generated or gold CQ respectively."""@en ;
+    dcat:keyword       "SemanticSimilarity"@en,
+    "Sentence Embeddings"@en,
+    "BERTScore"@en,
+    "Bench4KE"@en ;
+    dqv:hasQualityMetric
+        <https://w3id.org/bench4ke/metric/MeanCosineSimilarity>,
+        <https://w3id.org/bench4ke/metric/MeanBestMatchCosine>,
+        <https://w3id.org/bench4ke/metric/MeanGoldBestMatchCosine>,
+        <https://w3id.org/bench4ke/metric/BERTScoreF1>,
+        <https://w3id.org/bench4ke/metric/BERTScorePrecision>,
+        <https://w3id.org/bench4ke/metric/BERTScoreRecall> ;
+    dcterms:isPartOf   <https://w3id.org/bench4ke/task/CQGeneration> ;
+    ftr:hasBenchmark   <https://w3id.org/bench4ke> ;
+    ftr:supportedBy    <https://w3id.org/bench4ke> ;
+    dpv:isApplicableFor <https://www.wikidata.org/wiki/Q184754> ;
+    dcterms:creator    <https://orcid.org/0000-0002-0266-3452>,
+                       <https://orcid.org/0009-0009-4332-1780> ;
+    dcat:contactPoint  <https://orcid.org/0000-0002-0266-3452> ;
+    dcterms:publisher  <https://ror.org/01111rn36>,
+                       <https://ror.org/05w9g2j85>,
+                       <https://stlab.istc.cnr.it/stlab/> ;
+    dcterms:license    <http://creativecommons.org/licenses/by/4.0/> .
+
+<https://orcid.org/0000-0002-0266-3452> a vcard:Individual ;
+    vcard:fn       "Anna Sofia Lippolis" ;
+    vcard:hasEmail <mailto:annasofia.lippolis2@unibo.it>,
+                   <mailto:annasofia.lippolis@istc.cnr.it> ;
+    vcard:url      <https://orcid.org/0000-0002-0266-3452> .
+
+<https://orcid.org/0009-0009-4332-1780> a vcard:Individual ;
+    vcard:fn  "Minh Davide Ragagni" ;
+    vcard:url <https://orcid.org/0009-0009-4332-1780> .
+
+<https://ror.org/01111rn36> a foaf:Organization ;
+    foaf:name "University of Bologna" .
+
+<https://ror.org/05w9g2j85> a foaf:Organization ;
+    foaf:name "Institute of Cognitive Sciences and Technologies, CNR (ISTC-CNR)" .
+
+<https://stlab.istc.cnr.it/stlab/> a foaf:Organization ;
+    foaf:name "Semantic Technology Laboratory (STLab), ISTC-CNR" .
+
+<https://w3id.org/bench4ke> a ftr:Benchmark ;
+    dcterms:title      "Bench4KE"@en ;
+    dcterms:identifier "https://w3id.org/bench4ke" ;
+    dcat:landingPage   <https://github.com/fossr-project/ontogenia-cini> .

@@ -1,0 +1,68 @@
+@prefix dqv:     <http://www.w3.org/ns/dqv#> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix sio:     <http://semanticscience.org/resource/> .
+
+<https://w3id.org/bench4ke/dimension/LexicalSimilarity> a dqv:Dimension ;
+    dcterms:identifier "https://w3id.org/bench4ke/dimension/LexicalSimilarity" ;
+    dcterms:title      "Lexical Similarity"@en ;
+    rdfs:label         "LexicalSimilarity: token-level textual overlap between generated and gold-standard CQs"^^xsd:string ;
+    dcat:version       "0.1.0"^^xsd:string ;
+    ftr:status         "Active"@en ;
+    dcat:landingPage   <https://w3id.org/bench4ke/dimension/LexicalSimilarity> ;
+    dcterms:description """Lexical Similarity captures surface-level textual overlap between generated competency questions and
+gold-standard CQs using token-based comparison methods. Metrics in this dimension compare word sets or
+n-gram sequences directly, without any semantic encoding.
+
+Lexical metrics are fast to compute and interpretable, but are insensitive to paraphrasing: two CQs with
+identical meaning but different wording will score low. They are best used alongside semantic metrics to
+provide complementary evidence of coverage."""@en ;
+    dcat:keyword       "LexicalSimilarity"@en,
+    "Lexical Overlap"@en,
+    "Bench4KE"@en ;
+    dqv:hasQualityMetric
+        <https://w3id.org/bench4ke/metric/JaccardSimilarity>,
+        <https://w3id.org/bench4ke/metric/BLEU>,
+        <https://w3id.org/bench4ke/metric/ROUGELF1> ;
+    dcterms:isPartOf   <https://w3id.org/bench4ke/task/CQGeneration> ;
+    ftr:hasBenchmark   <https://w3id.org/bench4ke> ;
+    ftr:supportedBy    <https://w3id.org/bench4ke> ;
+    dpv:isApplicableFor <https://www.wikidata.org/wiki/Q184754> ;
+    dcterms:creator    <https://orcid.org/0000-0002-0266-3452>,
+                       <https://orcid.org/0009-0009-4332-1780> ;
+    dcat:contactPoint  <https://orcid.org/0000-0002-0266-3452> ;
+    dcterms:publisher  <https://ror.org/01111rn36>,
+                       <https://ror.org/05w9g2j85>,
+                       <https://stlab.istc.cnr.it/stlab/> ;
+    dcterms:license    <http://creativecommons.org/licenses/by/4.0/> .
+
+<https://orcid.org/0000-0002-0266-3452> a vcard:Individual ;
+    vcard:fn       "Anna Sofia Lippolis" ;
+    vcard:hasEmail <mailto:annasofia.lippolis2@unibo.it>,
+                   <mailto:annasofia.lippolis@istc.cnr.it> ;
+    vcard:url      <https://orcid.org/0000-0002-0266-3452> .
+
+<https://orcid.org/0009-0009-4332-1780> a vcard:Individual ;
+    vcard:fn  "Minh Davide Ragagni" ;
+    vcard:url <https://orcid.org/0009-0009-4332-1780> .
+
+<https://ror.org/01111rn36> a foaf:Organization ;
+    foaf:name "University of Bologna" .
+
+<https://ror.org/05w9g2j85> a foaf:Organization ;
+    foaf:name "Institute of Cognitive Sciences and Technologies, CNR (ISTC-CNR)" .
+
+<https://stlab.istc.cnr.it/stlab/> a foaf:Organization ;
+    foaf:name "Semantic Technology Laboratory (STLab), ISTC-CNR" .
+
+<https://w3id.org/bench4ke> a ftr:Benchmark ;
+    dcterms:title      "Bench4KE"@en ;
+    dcterms:identifier "https://w3id.org/bench4ke" ;
+    dcat:landingPage   <https://github.com/fossr-project/ontogenia-cini> .
